@@ -92,28 +92,32 @@ License
 
 ## Requirements
 
-Name	Version
-terraform	>= 4.0.0
-aws	>= 2.46
+| Name | Version |
+|------|---------|
+| terraform | >= 4.0.0 |
+| aws | >= 2.46 |
 
 Inputs
-Name	Description	Type	Default	Required
-vpc-cidr	The CIDR block for the VPC.	string	n/a	yes
-vpc-name	The name of the VPC.	string	n/a	yes
-subnet_cidr_block_pub	A list of CIDR blocks for the public subnets.	list(string)	n/a	yes
-subnet_cidr_block_pvt	A list of CIDR blocks for the private subnets.	list(string)	n/a	yes
-availability_zone_pub	A list of availability zones for the public subnets.	list(string)	n/a	yes
-availability_zone_pvt	A list of availability zones for the private subnets.	list(string)	n/a	yes
-subnet_name_map_pub	A map of subnet CIDR blocks to subnet names for the public subnets.	map(string)	n/a	yes
-subnet_name_map_pvt	A map of subnet CIDR blocks to subnet names for the private subnets.	map(string)	n/a	yes
+| Name | Description | Type	| Default | Required |
+|------|-------------|------|---------|----------|
+| vpc-cidr | The CIDR block for the VPC. | string | n/a | yes |
+| vpc-name | The name of the VPC. |	string | n/a | yes |
+| subnet_cidr_block_pub | A list of CIDR blocks for the public subnets. | list(string) | n/a | yes |
+| subnet_cidr_block_pvt | A list of CIDR blocks for the private subnets. | list(string) | n/a | yes |
+| availability_zone_pub	| A list of availability zones for the public subnets. | list(string) |	n/a | yes |
+| availability_zone_pvt | A list of availability zones for the private subnets. | list(string) | n/a | yes |
+| subnet_name_map_pub |	A map of subnet CIDR blocks to subnet names for the public subnets. | map(string) |	n/a | yes |
+| subnet_name_map_pvt |	A map of subnet CIDR blocks to subnet names for the private subnets. | map(string) | n/a | yes |
 
 Outputs
-Name	Description
-vpc_id	The ID of the VPC.
-public_subnet_ids	The IDs of the public subnets.
-private_subnet_ids	The IDs of the private subnets.
-internet_gateway_id	The ID of the internet gateway.
-nat_gateway_ids	The IDs of the NAT gateways.
+| Name | Description |
+|-----|-------------|
+| vpc_id | The ID of the VPC. |
+| public_subnet_ids	| The IDs of the public subnets. |
+| private_subnet_ids | The IDs of the private subnets. |
+| internet_gateway_id | The ID of the internet gateway. |
+| nat_gateway_ids | The IDs of the NAT gateways. |
+
 
 
 This Terraform configuration is released under the MIT License.
