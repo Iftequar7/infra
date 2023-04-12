@@ -97,7 +97,7 @@ License
 | terraform | >= 4.0.0 |
 | aws | >= 2.46 |
 
-Inputs
+## Inputs
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
 | vpc-cidr | The CIDR block for the VPC. | string | n/a | yes |
@@ -109,7 +109,7 @@ Inputs
 | subnet_name_map_pub |	A map of subnet CIDR blocks to subnet names for the public subnets. | map(string) |	n/a | yes |
 | subnet_name_map_pvt |	A map of subnet CIDR blocks to subnet names for the private subnets. | map(string) | n/a | yes |
 
-Outputs
+## Outputs
 | Name | Description |
 |-----|-------------|
 | vpc_id | The ID of the VPC. |
