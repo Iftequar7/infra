@@ -64,13 +64,18 @@ Getting Started
 
 To get started, clone this repository to your local machine and navigate to the root directory. Then, run the following command to initialize the Terraform configuration:
 
+```
 terraform init
+terraform plan
+```
 
 These variables will be used to configure the VPC, Internet Gateway, and subnets.
 
 Finally, run the following command to apply the Terraform configuration:
 
-terraform apply
+```
+terraform apply -auto-approve
+```
 
 This will create the VPC, Internet Gateway, and subnets in your AWS account.
 Outputs
