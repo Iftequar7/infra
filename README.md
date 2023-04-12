@@ -12,6 +12,7 @@ Before you can use this Terraform code, you'll need the following:
 First, create a module file in the root directory and add the values of the following variables:
 
 # VPC Module #################################################
+```
 module "vpc" {
 
   source                = "./modules/vpc"
@@ -57,7 +58,7 @@ module "vpc" {
   }
 
 }
-
+```
 
 Getting Started
 
