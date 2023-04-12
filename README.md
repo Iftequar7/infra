@@ -13,6 +13,7 @@ First, create a module file in the root directory and add the values of the foll
 
 # VPC Module #################################################
 module "vpc" {
+
   source                = "./modules/vpc"
   region                = local.region
   vpc-cidr              = "10.154.0.0/21"
@@ -24,6 +25,7 @@ module "vpc" {
     "10.154.0.128/25",
     "10.154.1.0/25"
   ]
+  
   availability_zone_pub = [
      "${local.region}a",
     "${local.region}b",
@@ -41,6 +43,7 @@ module "vpc" {
     "10.154.2.0/25",
     "10.154.2.128/25"
   ]
+  
   availability_zone_pvt = [
      "${local.region}a",
     "${local.region}b",
@@ -90,7 +93,7 @@ License
 ## Requirements
 
 Name	Version
-terraform	>= 0.12
+terraform	>= 4.0.0
 aws	>= 2.46
 
 Inputs
