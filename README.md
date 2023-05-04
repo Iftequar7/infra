@@ -52,7 +52,7 @@ module "module_name" {
   ##################################### Internet Gateway Configuration #######################################################
   create_igw = true
 
-  # NAT Gateway Configuration
+  ##################################### NAT Gateway Configuration ############################################################
   create_nat_gateway        = false
   create_nat_gateway_per_az = false
 
