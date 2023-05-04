@@ -106,20 +106,8 @@ License
 | aws | >= 2.46 |
 
 
-## Resources
-| Name | Description |
-|-----|-------------|
-| aws_vpc | Configures the VPC resource. |
-| aws_subnet | Configures public and private subnets. |
-| aws_internet_gateway | Configures the internet gateway for public subnets. |
-| aws_eip | Configures Elastic IPs for NAT gateways. |
-| aws_nat_gateway | Configures NAT gateways for private subnets. |
-| aws_route_table | Configures route tables for public and private subnets. |
-| aws_route_table_association | Associates subnets with route tables. |
-| aws_route | Configures routes for internet and NAT gateways. |
-
-
 ## Inputs
+**Note:** All inputs with Yes under the **Required** column are mandatory to execute the Terraform module successfully.
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
 | vpc_cidr_block | The CIDR block for the VPC. | string | n/a | yes |
@@ -139,6 +127,19 @@ License
 | create_nat_gateway_per_az | Boolean variable to create one NAT gateway per availability zone. | bool | false | yes |
 | create_igw_public_rt | Boolean variable to create a public route table for public subnets. | bool | false | yes |
 | create_natgtw_private_rt | Boolean variable to create private route tables for NAT gateways. | bool | false | yes |
+
+
+## Resources
+| Name | Description |
+|-----|-------------|
+| aws_vpc | Configures the VPC resource. |
+| aws_subnet | Configures public and private subnets. |
+| aws_internet_gateway | Configures the internet gateway for public subnets. |
+| aws_eip | Configures Elastic IPs for NAT gateways. |
+| aws_nat_gateway | Configures NAT gateways for private subnets. |
+| aws_route_table | Configures route tables for public and private subnets. |
+| aws_route_table_association | Associates subnets with route tables. |
+| aws_route | Configures routes for internet and NAT gateways. |
 
 
 ## Outputs
