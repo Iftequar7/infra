@@ -146,13 +146,13 @@ License
 | tags | A map of tags to assign to the transit gateway. | map(string) | "tgw-resource-share" | yes |
 | share_tgw | Whether to share the transit gateway through Resource Access Manager (RAM). | bool | true | yes |
 | vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | "vpc-id-1" | yes |
-| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | "subnet-id-1", "subnet-id-2", "subnet-id-3" | yes |
+| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | "subnet-id-1",  "subnet-id-2",  "subnet-id-3" | yes |
 | attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | "attachment1-name> | yes |
 | vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | "vpc-id-2" | yes |
-| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | "subnet-id-4", "subnet-id-5", "subnet-id-6" | yes |
+| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | "subnet-id-4",  "subnet-id-5",  "subnet-id-6" | yes |
 | attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | "attachment2-name" | yes |
 | vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | "vpc-id-3" | yes |
-| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | "subnet-id-7", "subnet-id-8", "subnet-id-9" | yes |
+| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | "subnet-id-7",  "subnet-id-8",  "subnet-id-9" | yes |
 | attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | "attachment3-name" | yes |
 | vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | "vpc-id-4" | yes |
 | subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | "subnet-id-10", "subnet-id-11", "subnet-id-12" | yes |
