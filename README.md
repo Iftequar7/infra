@@ -131,12 +131,13 @@ License
 ## Outputs
 | Name | Description |
 |-----|-------------|
-| vpc_id | The ID of the VPC. |
-| public_subnet_ids	| The IDs of the public subnets. |
-| private_subnet_ids | The IDs of the private subnets. |
-| internet_gateway_id | The ID of the internet gateway. |
-| nat_gateway_ids | The IDs of the NAT gateways. |
-
+| vpc_details | VPC details like ID, ARN, CIDR etc of our VPC. |
+| vpc_arn | ARN of our VPC. |
+| public_subnet_details | Public Subnet details like NAME, CIDR_Block, AZ, ID of all Public Subnets. |
+| private_subnet_details | Private Subnet details like NAME, CIDR_Block, AZ, ID of all Private Subnets. |
+| nat_gateway_details | The IDs of the NAT gateways. |
+| internetgw_details | The IDs of the Internet gateways. |
+| private_subnet_arn | ARN of the Private Subnets. |
 
 
 This Terraform configuration is released under the MIT License.
