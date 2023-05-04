@@ -1,7 +1,6 @@
-AWS Transit Gateway Configuration
+AWS VPC Configuration
 
-This repository contains Terraform code for configuring an Amazon Web Services (AWS) Transit Gateway.
-
+This repository contains Terraform code for configuring an Amazon Web Services (AWS) Virtual Private Cloud (VPC), an Internet Gateway, and public and private subnets.
 Prerequisites
 
 Before you can use this Terraform code, you'll need the following:
@@ -14,73 +13,52 @@ Before you can use this Terraform code, you'll need the following:
 
 Kindly replace the values from the module given below.
 
-    1. Set the region to your desired AWS region in the region parameter.
+* To create Public or Private subnets, set the value to true or false accordingly. If set to false, the subnets will not be created.
 
-    2. Configure the Transit Gateway by setting the following parameters:
-        * create_tgw: Set to true to create a new Transit Gateway.
-        * name: Name of the Transit Gateway.
-        * amazon_side_asn: Amazon side Autonomous System Number (ASN).
-        * description: Description of the Transit Gateway.
-        * enable_default_route_table_association: Set to false to disable association with the default route table.
-        * enable_default_route_table_propagation: Set to false to disable propagation to the default route table.
-        * enable_auto_accept_shared_attachments: Set to true to automatically accept shared VPC attachments.
-        * enable_dns_support: Set to true to enable DNS support.
+* Specify the number of subnets you want to create by setting the value of public_subnet_count or private_subnet_count.
 
-    3. Configure Resource Sharing by setting the following parameters:
-        * allow_external_principals: Set to true to allow sharing with external accounts.
-        * resource_share_accounts: List of AWS account IDs to share the Transit Gateway with.
-        * tags: A map of tags to add to the resource share.
-        * share_tgw: Set to true to share the Transit Gateway.
+* Choose the CIDR range for your subnets by setting the values of public_subnet_cidr_block and private_subnet_cidr_block.
 
-    4. Configure VPC Attachments by setting the following parameters for each attachment:
-        * vpc_id_X: ID of the VPC.
-        * subnet_ids_X: List of IDs of the subnets in the VPC.
-        
+* Give names to your subnets by specifying the CIDR range of each subnet in public_subnet_name_map or private_subnet_name_map.
+
+* Configure the Internet Gateway by setting the value of create_igw to true or false. If set to false, the Internet Gateway will not be created.
+
+* Similarly, configure the NAT Gateway by setting the value of create_nat_gateway to true or false. If you need a NAT Gateway in each Availability Zone, set create_nat_gateway_per_az to true.
+
+* To create routes for Internet Gateway and NAT Gateway, set the values of create_igw_public_rt and create_natgtw_private_rt to true or false, as required.
 
 # VPC Module ########################################################################################################
 ```
-module "tgw" {
-  source = "../../terraform-aws-transit-gateway"
-  region = "eu-central-1"
-  # create_tgw = true
-  name   = "networking-tgw-01"
-  amazon_side_asn         = "64512"
-  description             = "This is Transit Gaaateway"
-  enable_default_route_table_association    = false
-  enable_default_route_table_propagation    = false
-  enable_auto_accept_shared_attachments     = true
-  enable_dns_support                        = true
+module "module_name" {
+  source = "../../../modules/terraform-aws-vpc" # vpc module repo url
+  
+  vpc_cidr_block = "10.0.0.0/16" # specify your VPC CIDR range
+  vpc_name       = "name-vpc" # specify VPC name
 
-######################################################### RAM resource share ########################################
-allow_external_principals = true
-resource_share_accounts = ["111111111111", "222222222222"] 
-  tags = {
-    Name = "tgw-resource-share"
-  }
+  ################################### Public subnets inputs & configuration  ################################################
+  create_public_subnet     = true
+  public_subnet_count      = 3 
+  public_subnet_cidr_block = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnet_az         = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  public_subnet_name_map   = { "10.0.1.0/24" = "public-subnet-a", "10.0.2.0/24" = "public-subnet-b", "10.0.3.0/24" = "public-subnet-c" }
 
-share_tgw = true
+  # Private subnets inputs
+  create_private_subnet     = true
+  private_subnet_count      = 3
+  private_subnet_cidr_block = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  private_subnet_az         = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  private_subnet_name_map   = { "10.0.4.0/24" = "private-subnet-a", "10.0.5.0/24" = "private-subnet-b", "10.0.6.0/24" = "private-subnet-c" }
 
-####################################### Vpc attachments ##############################################################
+  ##################################### Internet Gateway Configuration #######################################################
+  create_igw = true
 
-# -------------------------- Ingress tgw vpc attachment -----------------------sanbox egress values delete them befor push----------------
-  vpc_id_1                  =  "vpc-0d2e6e67a3c1aad38"
-  subnet_ids_1              = ["subnet-0271d46555e756204", "subnet-0748daf7d1acf68dd", "subnet-0f6356b48d5683d0f"] 
-  attachment1_name          = "ingress-to-tgw01"
+  ##################################### NAT Gateway Configuration ############################################################
+  create_nat_gateway        = false
+  create_nat_gateway_per_az = false
 
-# -------------------------- Egress tgw vpc attachment  ------------- sanbox egress values delete them befor push-------------------------
-  vpc_id_2                  =  "vpc-0dda0cd4027ddface"
-  subnet_ids_2              = ["subnet-0a3e445e5d0773496", "subnet-0c0d7a16f755ea570", "subnet-0bacdcfbddcea4fb4"]
-  attachment2_name          = "egress-to-tgw01"
-
- # -------------------------- Sharedservices tgw vpc attachment  -------------------------------------------------------------------------
-  vpc_id_3                  = "vpc-061171ef1a7670ca6"
-  subnet_ids_3              = ["subnet-013ae547208a6438f", "subnet-00e35c66452539875", "subnet-08640a3b1da20da9f"]
-  attachment3_name          = "sharedservices-to-tgw01"
-
-# -------------------------- orchestration tgw vpc attachment  ---------------------------------------------------------------------------
-  vpc_id_4                 = "vpc-0306b35e4ab042334"
-  subnet_ids_4             = ["subnet-0134c9f92f8e06e46", "subnet-0a069ce5dfc9ea22f", "subnet-00961c796e81c9126"]
-  attachment4_name         = "orchestration-to-tgw01"
+####################################### Create the route tables as per vpc ###################################################
+  create_igw_public_rt = true
+  create_natgtw_private_rt = false
 }
 ```
 
@@ -106,11 +84,10 @@ Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
 
-    tgw_id: This output provides the ID of the AWS Transit Gateway created by this module
-    tgw_arn: This output provides the ARN (Amazon Resource Name) of the AWS Transit Gateway created by this module
-    tgw_share_arn: This output provides the ARN (Amazon Resource Name) of the created RAM (Resource Access Manager) resource share
-                   The resource share allows the specified accounts to use the created AWS Transit Gateway
-    
+    vpc_id: The ID of the VPC
+    igw_id: The ID of the Internet Gateway
+    public_subnet_ids: The IDs of the public subnets
+    private_subnet_ids: The IDs of the private subnets
 
 Cleaning Up
 
@@ -133,52 +110,48 @@ License
 **Note:** All inputs with Yes under the **Required** column are mandatory to execute the Terraform module successfully.
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
-| region | The region where the transit gateway should be created. | string | "your-region" | yes |
-| name | The name for the transit gateway. | string | "tgw-name" | yes |
-| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "asn" | yes |
-| description | A description for the transit gateway. | string | "tgw-description" | yes |
-| enable_default_route_table_association | Enable association of the default route table with the transit gateway. | bool |	false | yes |
-| enable_default_route_table_propagation | Enable propagation of the default route table to the transit gateway. | bool | false | yes |
-| enable_auto_accept_shared_attachments | Enable auto acceptance of shared attachments. | bool | true | yes |
-| enable_dns_support | Enable DNS support for the transit gateway. | bool | true | yes |
-| allow_external_principals | TWhether to allow external AWS accounts to use resources shared through Resource Access Manager (RAM). | bool | true | yes |
-| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | "account-id-1", "account-id-2" | yes |
-| tags | A map of tags to assign to the transit gateway. | map(string) | "tgw-resource-share" | yes |
-| share_tgw | Whether to share the transit gateway through Resource Access Manager (RAM). | bool | true | yes |
-| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | "vpc-id-1" | yes |
-| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | "subnet-id-1",  "subnet-id-2",  "subnet-id-3" | yes |
-| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | "attachment1-name> | yes |
-| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | "vpc-id-2" | yes |
-| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | "subnet-id-4",  "subnet-id-5",  "subnet-id-6" | yes |
-| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | "attachment2-name" | yes |
-| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | "vpc-id-3" | yes |
-| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | "subnet-id-7",  "subnet-id-8",  "subnet-id-9" | yes |
-| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | "attachment3-name" | yes |
-| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | "vpc-id-4" | yes |
-| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | "subnet-id-10", "subnet-id-11", "subnet-id-12" | yes |
-| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | "attachment4-name" | yes |
+| vpc_cidr_block | The CIDR block for the VPC. | string | n/a | yes |
+| vpc_name | The name of the VPC. |	string | n/a | yes |
+| create_public_subnet | Boolean variable to create Public subnets. | bool | false | yes |
+| public_subnet_count | The number of Public subnets to create. | number | 0 | yes |
+| public_subnet_cidr_block | A list of CIDR blocks for the Public subnets. | list(string) |	null | yes |
+| public_subnet_az | A list of availability zones for the Public subnets. | list(string) | null | yes |
+| public_subnet_name_map | A map of names for the public subnets. | map(string) | null | yes |
+| create_private_subnet | Boolean variable to create private subnets. | bool | false | yes |
+| private_subnet_count | The number of private subnets to create. | number | 0 | yes |
+| private_subnet_cidr_block | A list of CIDR blocks for the private subnets. | list(string) | null | yes |
+| private_subnet_az | A list of availability zones for the private subnets. | list(string) | null | yes |
+| private_subnet_name_map |	A map of names for the private subnets. | map(string) | null | yes |
+| create_igw | Boolean variable to create an internet gateway for public subnets. | bool | false | yes |
+| create_nat_gateway | Boolean variable to create NAT gateways for private subnets. | bool | false | yes |
+| create_nat_gateway_per_az | Boolean variable to create one NAT gateway per availability zone. | bool | false | yes |
+| create_igw_public_rt | Boolean variable to create a public route table for public subnets. | bool | false | yes |
+| create_natgtw_private_rt | Boolean variable to create private route tables for NAT gateways. | bool | false | yes |
 
 
 ## Resources
 | Name | Description |
 |-----|-------------|
-| aws_ec2_transit_gateway | Manages an AWS Transit Gateway. |
-| aws_ec2_transit_gateway_vpc_attachment | Attaches a VPC to an AWS Transit Gateway. |
-| aws_ec2_transit_gateway_route_table | Manages a Transit Gateway Route Table. |
-| aws_ec2_transit_gateway_route | Manages a Transit Gateway Route. |
-| aws_ram_resource_share | Manages a Resource Share in AWS RAM. |
-| aws_ram_principal_association | Manages the association between RAM Share and Principal. |
-| aws_ram_resource_association | Manages the association between RAM Share and Resources. |
-| aws_caller_identity | Provides the AWS Account ID and other details. |
-| aws_ram_resource_share_accepter | Manages the acceptance of a Resource Share in AWS RAM. |
+| aws_vpc | Configures the VPC resource. |
+| aws_subnet | Configures public and private subnets. |
+| aws_internet_gateway | Configures the internet gateway for public subnets. |
+| aws_eip | Configures Elastic IPs for NAT gateways. |
+| aws_nat_gateway | Configures NAT gateways for private subnets. |
+| aws_route_table | Configures route tables for public and private subnets. |
+| aws_route_table_association | Associates subnets with route tables. |
+| aws_route | Configures routes for internet and NAT gateways. |
 
 
 ## Outputs
 | Name | Description |
 |-----|-------------|
-| tgw_id | The ID of the created AWS Transit Gateway. |
-| tgw_arn | The ARN of the created AWS Transit Gateway. |
-| tgw_share_arn | The ARN of the created RAM resource share. |
+| vpc_details | VPC details like ID, ARN, CIDR etc of our VPC. |
+| vpc_arn | ARN of our VPC. |
+| public_subnet_details | Public Subnet details like NAME, CIDR_Block, AZ, ID of all Public Subnets. |
+| private_subnet_details | Private Subnet details like NAME, CIDR_Block, AZ, ID of all Private Subnets. |
+| nat_gateway_details | The IDs of the NAT gateways. |
+| internetgw_details | The IDs of the Internet gateways. |
+| private_subnet_arn | ARN of the Private Subnets. |
 
 
 This Terraform configuration is released under the MIT License.
