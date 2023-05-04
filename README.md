@@ -134,8 +134,8 @@ License
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
 | region | The region where the transit gateway should be created. | string | "your-region" | yes |
-| name | The name for the transit gateway. | string | "<tgw-name>" | yes |
-| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "<asn>" | yes |
+| name | The name for the transit gateway. | string | "tgw-name" | yes |
+| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "asn" | yes |
 | description | A description for the transit gateway. | string | "tgw-description" | yes |
 | enable_default_route_table_association | Enable association of the default route table with the transit gateway. | bool |	false | yes |
 | enable_default_route_table_propagation | Enable propagation of the default route table to the transit gateway. | bool | false | yes |
