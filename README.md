@@ -45,13 +45,11 @@ module "orch_vpc" {
   create_igw = false
 
   ############################################## NAT Gateway Configuration update ####################################
-
   create_nat_gateway        = false
   create_nat_gateway_per_az = false
 
   
   ############################################# Create the route tables as per vpc ###################################
-  
   create_igw_public_rt = false
   create_natgtw_private_rt = false
 
