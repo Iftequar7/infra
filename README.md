@@ -9,23 +9,23 @@ Before you can use this Terraform code, you'll need the following:
     AWS access keys with the necessary permissions
     Terraform is installed on your local machine.
 
-First, create a module file in the root directory and add the values of the following variables:
+### First, create a module file in the root directory and add the values of the following variables:
 
 Kindly replace the values from the module given below.
 
-To create Public or Private subnets, set the value to true or false accordingly. If set to false, the subnets will not be created.
+1. To create Public or Private subnets, set the value to true or false accordingly. If set to false, the subnets will not be created.
 
-Specify the number of subnets you want to create by setting the value of public_subnet_count or private_subnet_count.
+2. Specify the number of subnets you want to create by setting the value of public_subnet_count or private_subnet_count.
 
-Choose the CIDR range for your subnets by setting the values of public_subnet_cidr_block and private_subnet_cidr_block.
+3. Choose the CIDR range for your subnets by setting the values of public_subnet_cidr_block and private_subnet_cidr_block.
 
-Give names to your subnets by specifying the CIDR range of each subnet in public_subnet_name_map or private_subnet_name_map.
+4. Give names to your subnets by specifying the CIDR range of each subnet in public_subnet_name_map or private_subnet_name_map.
 
-Configure the Internet Gateway by setting the value of create_igw to true or false. If set to false, the Internet Gateway will not be created.
+5. Configure the Internet Gateway by setting the value of create_igw to true or false. If set to false, the Internet Gateway will not be created.
 
-Similarly, configure the NAT Gateway by setting the value of create_nat_gateway to true or false. If you need a NAT Gateway in each Availability Zone, set create_nat_gateway_per_az to true.
+6. Similarly, configure the NAT Gateway by setting the value of create_nat_gateway to true or false. If you need a NAT Gateway in each Availability Zone, set create_nat_gateway_per_az to true.
 
-To create routes for Internet Gateway and NAT Gateway, set the values of create_igw_public_rt and create_natgtw_private_rt to true or false, as required.
+7. To create routes for Internet Gateway and NAT Gateway, set the values of create_igw_public_rt and create_natgtw_private_rt to true or false, as required.
 
 # VPC Module ########################################################################################################
 ```
