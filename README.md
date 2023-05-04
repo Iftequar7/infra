@@ -116,14 +116,23 @@ License
 ## Inputs
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
-| vpc-cidr | The CIDR block for the VPC. | string | n/a | yes |
-| vpc-name | The name of the VPC. |	string | n/a | yes |
-| subnet_cidr_block_pub | A list of CIDR blocks for the public subnets. | list(string) | n/a | yes |
-| subnet_cidr_block_pvt | A list of CIDR blocks for the private subnets. | list(string) | n/a | yes |
-| availability_zone_pub	| A list of availability zones for the public subnets. | list(string) |	n/a | yes |
-| availability_zone_pvt | A list of availability zones for the private subnets. | list(string) | n/a | yes |
-| subnet_name_map_pub |	A map of subnet CIDR blocks to subnet names for the public subnets. | map(string) |	n/a | yes |
-| subnet_name_map_pvt |	A map of subnet CIDR blocks to subnet names for the private subnets. | map(string) | n/a | yes |
+| vpc_cidr_block | The CIDR block for the VPC. | string | n/a | yes |
+| vpc_name | The name of the VPC. |	string | n/a | yes |
+| create_public_subnet | Boolean variable to create Public subnets. | bool | false | yes |
+| public_subnet_count | The number of Public subnets to create. | number | 0 | yes |
+| public_subnet_cidr_block | A list of CIDR blocks for the Public subnets. | list(string) |	null | yes |
+| public_subnet_az | A list of availability zones for the Public subnets. | list(string) | null | yes |
+| public_subnet_name_map | A map of names for the public subnets. | map(string) | null | yes |
+| create_private_subnet | Boolean variable to create private subnets. | bool | false | yes |
+| private_subnet_count | The number of private subnets to create. | number | 0 | yes |
+| private_subnet_cidr_block | A list of CIDR blocks for the private subnets. | list(string) | null | yes |
+| private_subnet_az | A list of availability zones for the private subnets. | list(string) | null | yes |
+| private_subnet_name_map |	A map of names for the private subnets. | map(string) | null | yes |
+| create_igw | Boolean variable to create an internet gateway for public subnets. | bool | false | yes |
+| create_nat_gateway | Boolean variable to create NAT gateways for private subnets. | bool | false | yes |
+| create_nat_gateway_per_az | Boolean variable to create one NAT gateway per availability zone. | bool | false | yes |
+| create_igw_public_rt | Boolean variable to create a public route table for public subnets. | bool | false | yes |
+| create_natgtw_private_rt | Boolean variable to create private route tables for NAT gateways. | bool | false | yes |
 
 
 ## Outputs
