@@ -11,51 +11,49 @@ Before you can use this Terraform code, you'll need the following:
 
 First, create a module file in the root directory and add the values of the following variables:
 
-# VPC Module #################################################
+# VPC Module ########################################################################################################
 ```
-module "vpc" {
+module "orch_vpc" {
+  source = "../../../modules/terraform-aws-vpc" # vpc module repo url
 
-  source                = "./modules/vpc"
-  region                = local.region
-  vpc-cidr              = "10.154.0.0/21"
-  vpc-name              = "egress-vpc"
-  project_name          = "egress"
-  
-  subnet_cidr_block_pub = [
-    "10.154.0.0/25",
-    "10.154.0.128/25",
-    "10.154.1.0/25"
-  ]
-  
-  availability_zone_pub = [
-     "${local.region}a",
-    "${local.region}b",
-    "${local.region}c"
-  ]
+  vpc_cidr_block = "10.154.32.0/21"
+  vpc_name       = "orchestration-vpc"
 
-  subnet_name_map_pub = {
-    "10.154.0.0/25"   = "egress-access-public-subnet-a"
-    "10.154.0.128/25"  = "egress-access-public-subnet-b"
-    "10.154.1.0/25" = "egress-access-public-subnet-c"
+  create_public_subnet = false
+  
+  ############################################ Private subnets configuration #######################################
+  create_private_subnet = true
+  private_subnet_count  = 6
+  private_subnet_cidr_block = [
+    "10.154.32.0/25", "10.154.32.128/25", "10.154.33.0/25",
+    "10.154.33.128/25", "10.154.34.0/25", "10.154.34.128/25"
+  ]
+  private_subnet_az = [
+    "${local.region}a", "${local.region}b", "${local.region}c",
+    "${local.region}a", "${local.region}b", "${local.region}c"
+  ]
+  private_subnet_name_map = {
+    "10.154.32.0/25"   = "orchestration-eks-private-subnet-a",
+    "10.154.32.128/25" = "orchestration-eks-private-subnet-b",
+    "10.154.33.0/25"   = "orchestration-eks-private-subnet-c",
+    "10.154.33.128/25" = "orchestration-tgw-private-subnet-a",
+    "10.154.34.0/25"   = "orchestration-tgw-private-subnet-b",
+    "10.154.34.128/25" = "orchestration-tgw-private-subnet-c"
   }
 
-  subnet_cidr_block_pvt = [
-    "10.154.1.128/25",
-    "10.154.2.0/25",
-    "10.154.2.128/25"
-  ]
-  
-  availability_zone_pvt = [
-     "${local.region}a",
-    "${local.region}b",
-    "${local.region}c"
-  ]
+  ############################################## Internet Gateway Configuration ######################################
+  create_igw = false
 
-  subnet_name_map_pvt = {
-     "10.154.1.128/25"   = "egress-tgw-private-subnet-a"
-    "10.154.2.0/25"  = "egress-tgw-private-subnet-b"
-    "10.154.2.128/25" = "egress-tgw-private-subnet-c"
-  }
+  ############################################## NAT Gateway Configuration update ####################################
+
+  create_nat_gateway        = false
+  create_nat_gateway_per_az = false
+
+  
+  ############################################# Create the route tables as per vpc ###################################
+  
+  create_igw_public_rt = false
+  create_natgtw_private_rt = false
 
 }
 ```
