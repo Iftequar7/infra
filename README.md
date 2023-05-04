@@ -13,21 +13,19 @@ First, create a module file in the root directory and add the values of the foll
 
 Kindly replace the values from the module given below.
 
-For creating Public OR Private subnets you need to set the value ture OR false.
+To create Public or Private subnets, set the value to true or false accordingly. If set to false, the subnets will not be created.
 
-It will not create the subnets, If we have set the value false in create_public_subnet OR create_private_subnet
+Specify the number of subnets you want to create by setting the value of public_subnet_count or private_subnet_count.
 
-Mention the subnet count in public_subnet_count OR private_subnet_count in order to create the number of subnets we want.
+Choose the CIDR range for your subnets by setting the values of public_subnet_cidr_block and private_subnet_cidr_block.
 
-Select the public_subnet_cidr_block & private_subnet_cidr_block for your subnet CIDR range.
+Give names to your subnets by specifying the CIDR range of each subnet in public_subnet_name_map or private_subnet_name_map.
 
-Give Names to you subnets by giving the CIDR range of the subnet in public_subnet_name_map OR private_subnet_name_map
+Configure the Internet Gateway by setting the value of create_igw to true or false. If set to false, the Internet Gateway will not be created.
 
-Configure the Internet Gateway by selecting true OR false in create_igw, If we select false it will not create the Internet Gateway.
+Similarly, configure the NAT Gateway by setting the value of create_nat_gateway to true or false. If you need a NAT Gateway in each Availability Zone, set create_nat_gateway_per_az to true.
 
-Same for NAT Gateway select true OR false in create_nat_gateway field & if we need NAT Gateway in each AZ select true in create_nat_gateway_per_az
-
-While creating routes for Internet Gateway & NAT Gateway select true OR false in create_igw_public_rt & create_natgtw_private_rt
+To create routes for Internet Gateway and NAT Gateway, set the values of create_igw_public_rt and create_natgtw_private_rt to true or false, as required.
 
 # VPC Module ########################################################################################################
 ```
@@ -58,7 +56,7 @@ module "module_name" {
   create_nat_gateway        = false
   create_nat_gateway_per_az = false
 
-############################################# Create the route tables as per vpc ###################################
+####################################### Create the route tables as per vpc ###################################################
   create_igw_public_rt = true
   create_natgtw_private_rt = false
 }
