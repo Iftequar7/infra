@@ -1,4 +1,4 @@
-AWS VPC Configuration
+AWS Transit Gateway Configuration
 
 This repository contains Terraform code for configuring an Amazon Web Services (AWS) Transit Gateway.
 
@@ -14,19 +14,28 @@ Before you can use this Terraform code, you'll need the following:
 
 Kindly replace the values from the module given below.
 
-* To create Public or Private subnets, set the value to true or false accordingly. If set to false, the subnets will not be created.
+    1. Set the region to your desired AWS region in the region parameter.
 
-* Specify the number of subnets you want to create by setting the value of public_subnet_count or private_subnet_count.
+    2. Configure the Transit Gateway by setting the following parameters:
+        * create_tgw: Set to true to create a new Transit Gateway.
+        * name: Name of the Transit Gateway.
+        * amazon_side_asn: Amazon side Autonomous System Number (ASN).
+        * description: Description of the Transit Gateway.
+        * enable_default_route_table_association: Set to false to disable association with the default route table.
+        * enable_default_route_table_propagation: Set to false to disable propagation to the default route table.
+        * enable_auto_accept_shared_attachments: Set to true to automatically accept shared VPC attachments.
+        * enable_dns_support: Set to true to enable DNS support.
 
-* Choose the CIDR range for your subnets by setting the values of public_subnet_cidr_block and private_subnet_cidr_block.
+    3. Configure Resource Sharing by setting the following parameters:
+        * allow_external_principals: Set to true to allow sharing with external accounts.
+        * resource_share_accounts: List of AWS account IDs to share the Transit Gateway with.
+        * tags: A map of tags to add to the resource share.
+        * share_tgw: Set to true to share the Transit Gateway.
 
-* Give names to your subnets by specifying the CIDR range of each subnet in public_subnet_name_map or private_subnet_name_map.
-
-* Configure the Internet Gateway by setting the value of create_igw to true or false. If set to false, the Internet Gateway will not be created.
-
-* Similarly, configure the NAT Gateway by setting the value of create_nat_gateway to true or false. If you need a NAT Gateway in each Availability Zone, set create_nat_gateway_per_az to true.
-
-* To create routes for Internet Gateway and NAT Gateway, set the values of create_igw_public_rt and create_natgtw_private_rt to true or false, as required.
+    4. Configure VPC Attachments by setting the following parameters for each attachment:
+        * vpc_id_X: ID of the VPC.
+        * subnet_ids_X: List of IDs of the subnets in the VPC.
+        
 
 # VPC Module ########################################################################################################
 ```
@@ -124,30 +133,30 @@ License
 **Note:** All inputs with Yes under the **Required** column are mandatory to execute the Terraform module successfully.
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
-| region | The region where the transit gateway should be created. | string | eu-central-1 | yes |
-| name | The name for the transit gateway. |	string | n/a | yes |
-| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | 64512 | yes |
-| description | A description for the transit gateway. | string | n/a | yes |
+| region | The region where the transit gateway should be created. | string | "<your-region>" | yes |
+| name | The name for the transit gateway. | string | "<tgw-name>" | yes |
+| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "<asn>" | yes |
+| description | A description for the transit gateway. | string | "<tgw-description>" | yes |
 | enable_default_route_table_association | Enable association of the default route table with the transit gateway. | bool |	false | yes |
 | enable_default_route_table_propagation | Enable propagation of the default route table to the transit gateway. | bool | false | yes |
 | enable_auto_accept_shared_attachments | Enable auto acceptance of shared attachments. | bool | true | yes |
 | enable_dns_support | Enable DNS support for the transit gateway. | bool | true | yes |
 | allow_external_principals | TWhether to allow external AWS accounts to use resources shared through Resource Access Manager (RAM). | bool | true | yes |
-| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | n/a | yes |
-| tags | A map of tags to assign to the transit gateway. | map(string) | n/a | yes |
+| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | "<account-id-1>", "<account-id-2>" | yes |
+| tags | A map of tags to assign to the transit gateway. | map(string) | "<tgw-resource-share>" | yes |
 | share_tgw | Whether to share the transit gateway through Resource Access Manager (RAM). | bool | true | yes |
-| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | null | yes |
-| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | null | yes |
-| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | null | yes |
-| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | null | yes |
-| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | null | yes |
-| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | null | yes |
-| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | null | yes |
-| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | null | yes |
-| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | null | yes |
-| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | null | yes |
-| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | null | yes |
-| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | null | yes |
+| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | "<vpc-id-1>" | yes |
+| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | "<subnet-id-1>", "<subnet-id-2>", "<subnet-id-3>" | yes |
+| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | "<attachment1-name>" | yes |
+| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | "<vpc-id-2>" | yes |
+| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | "<subnet-id-4>", "<subnet-id-5>", "<subnet-id-6>" | yes |
+| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | "<attachment2-name>" | yes |
+| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | "<vpc-id-3>" | yes |
+| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | "<subnet-id-7>", "<subnet-id-8>", "<subnet-id-9>" | yes |
+| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | "<attachment3-name>" | yes |
+| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | "<vpc-id-4>" | yes |
+| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | "<subnet-id-10>", "<subnet-id-11>", "<subnet-id-12>" | yes |
+| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | "<attachment4-name>" | yes |
 
 
 ## Resources
