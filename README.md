@@ -101,6 +101,20 @@ License
 | terraform | >= 4.0.0 |
 | aws | >= 2.46 |
 
+
+## Resources
+| Name | Description |
+|-----|-------------|
+| aws_vpc | Configures the VPC resource. |
+| aws_subnet | Configures public and private subnets. |
+| aws_internet_gateway | Configures the internet gateway for public subnets. |
+| aws_eip | Configures Elastic IPs for NAT gateways. |
+| aws_nat_gateway | Configures NAT gateways for private subnets. |
+| aws_route_table | Configures route tables for public and private subnets. |
+| aws_route_table_association | Associates subnets with route tables. |
+| aws_route | Configures routes for internet and NAT gateways. |
+
+
 ## Inputs
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
@@ -112,6 +126,7 @@ License
 | availability_zone_pvt | A list of availability zones for the private subnets. | list(string) | n/a | yes |
 | subnet_name_map_pub |	A map of subnet CIDR blocks to subnet names for the public subnets. | map(string) |	n/a | yes |
 | subnet_name_map_pvt |	A map of subnet CIDR blocks to subnet names for the private subnets. | map(string) | n/a | yes |
+
 
 ## Outputs
 | Name | Description |
