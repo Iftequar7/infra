@@ -11,48 +11,56 @@ Before you can use this Terraform code, you'll need the following:
 
 First, create a module file in the root directory and add the values of the following variables:
 
+Kindly replace the values from the module given below.
+
+For creating Public OR Private subnets you need to set the value ture OR false.
+
+It will not create the subnets, If we have set the value false in create_public_subnet OR create_private_subnet
+
+Mention the subnet count in public_subnet_count OR private_subnet_count in order to create the number of subnets we want.
+
+Select the public_subnet_cidr_block & private_subnet_cidr_block for your subnet CIDR range.
+
+Give Names to you subnets by giving the CIDR range of the subnet in public_subnet_name_map OR private_subnet_name_map
+
+Configure the Internet Gateway by selecting true OR false in create_igw, If we select false it will not create the Internet Gateway.
+
+Same for NAT Gateway select true OR false in create_nat_gateway field & if we need NAT Gateway in each AZ select true in create_nat_gateway_per_az
+
+While creating routes for Internet Gateway & NAT Gateway select true OR false in create_igw_public_rt & create_natgtw_private_rt
+
 # VPC Module ########################################################################################################
 ```
-module "orch_vpc" {
+module "module_name" {
   source = "../../../modules/terraform-aws-vpc" # vpc module repo url
-
-  vpc_cidr_block = "10.154.32.0/21"
-  vpc_name       = "orchestration-vpc"
-
-  create_public_subnet = false
   
-  ############################################ Private subnets configuration #######################################
-  create_private_subnet = true
-  private_subnet_count  = 6
-  private_subnet_cidr_block = [
-    "10.154.32.0/25", "10.154.32.128/25", "10.154.33.0/25",
-    "10.154.33.128/25", "10.154.34.0/25", "10.154.34.128/25"
-  ]
-  private_subnet_az = [
-    "${local.region}a", "${local.region}b", "${local.region}c",
-    "${local.region}a", "${local.region}b", "${local.region}c"
-  ]
-  private_subnet_name_map = {
-    "10.154.32.0/25"   = "orchestration-eks-private-subnet-a",
-    "10.154.32.128/25" = "orchestration-eks-private-subnet-b",
-    "10.154.33.0/25"   = "orchestration-eks-private-subnet-c",
-    "10.154.33.128/25" = "orchestration-tgw-private-subnet-a",
-    "10.154.34.0/25"   = "orchestration-tgw-private-subnet-b",
-    "10.154.34.128/25" = "orchestration-tgw-private-subnet-c"
-  }
+  vpc_cidr_block = "10.0.0.0/16" # specify your VPC CIDR range
+  vpc_name       = "name-vpc" # specify VPC name
 
-  ############################################## Internet Gateway Configuration ######################################
-  create_igw = false
+  ################################### Public subnets inputs & configuration  ################################################
+  create_public_subnet     = true
+  public_subnet_count      = 3 
+  public_subnet_cidr_block = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnet_az         = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  public_subnet_name_map   = { "10.0.1.0/24" = "public-subnet-a", "10.0.2.0/24" = "public-subnet-b", "10.0.3.0/24" = "public-subnet-c" }
 
-  ############################################## NAT Gateway Configuration update ####################################
+  # Private subnets inputs
+  create_private_subnet     = true
+  private_subnet_count      = 3
+  private_subnet_cidr_block = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  private_subnet_az         = ["${local.region}a", "${local.region}b", "${local.region}c"]
+  private_subnet_name_map   = { "10.0.4.0/24" = "private-subnet-a", "10.0.5.0/24" = "private-subnet-b", "10.0.6.0/24" = "private-subnet-c" }
+
+  ##################################### Internet Gateway Configuration #######################################################
+  create_igw = true
+
+  # NAT Gateway Configuration
   create_nat_gateway        = false
   create_nat_gateway_per_az = false
 
-  
-  ############################################# Create the route tables as per vpc ###################################
-  create_igw_public_rt = false
+############################################# Create the route tables as per vpc ###################################
+  create_igw_public_rt = true
   create_natgtw_private_rt = false
-
 }
 ```
 
