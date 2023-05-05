@@ -37,7 +37,7 @@ Kindly replace the values from the module given below.
         * subnet_ids_X: List of IDs of the subnets in the VPC.
         
 
-# VPC Module ########################################################################################################
+# Transit Gateway Module ########################################################################################################
 ```
 module "tgw" {
   source = "../../terraform-aws-transit-gateway"
