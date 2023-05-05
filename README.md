@@ -111,9 +111,9 @@ Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
 
-    ```tgw_id```: This output provides the ID of the AWS Transit Gateway created by this module
-    ```tgw_arn```: This output provides the ARN (Amazon Resource Name) of the AWS Transit Gateway created by this module
-    ```tgw_share_arn```: This output provides the ARN (Amazon Resource Name) of the created RAM (Resource Access Manager) resource share
+    tgw_id: This output provides the ID of the AWS Transit Gateway created by this module
+    tgw_arn: This output provides the ARN (Amazon Resource Name) of the AWS Transit Gateway created by this module
+    tgw_share_arn: This output provides the ARN (Amazon Resource Name) of the created RAM (Resource Access Manager) resource share
                    The resource share allows the specified accounts to use the created AWS Transit Gateway
     
 
