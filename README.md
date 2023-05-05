@@ -84,7 +84,7 @@ share_tgw = true
 
   vpc_id_4                 = "vpc-0306b35e4ab042334"
   subnet_ids_4             = ["subnet-0134c9f92f8e06e46", "subnet-0a069ce5dfc9ea22f", "subnet-00961c796e81c9126"]
-  attachment4_name         = "namw_4-to-tgw01"
+  attachment4_name         = "name_4-to-tgw01"
 }
 ```
 
