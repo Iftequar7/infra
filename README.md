@@ -126,7 +126,7 @@ terraform destroy
 ```
 
 This will delete the Transit Gateway, and Resource Access Manager from your AWS account.
-License
+
 
 ## Requirements
 
