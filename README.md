@@ -125,7 +125,7 @@ To delete the resources created by this Terraform configuration, run the followi
 terraform destroy
 ```
 
-This will delete the VPC, Internet Gateway, and subnets from your AWS account.
+This will delete the Transit Gateway, and Resource Access Manager from your AWS account.
 License
 
 ## Requirements
