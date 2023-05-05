@@ -133,30 +133,30 @@ License
 **Note:** All inputs with Yes under the **Required** column are mandatory to execute the Terraform module successfully.
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
-| region | The region where the transit gateway should be created. | string | "your-region" | yes |
-| name | The name for the transit gateway. | string | "tgw-name" | yes |
-| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "asn" | yes |
-| description | A description for the transit gateway. | string | "tgw-description" | yes |
+| region | The region where the transit gateway should be created. | string | "" | yes |
+| name | The name for the transit gateway. | string | "" | yes |
+| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "" | yes |
+| description | A description for the transit gateway. | string | "" | yes |
 | enable_default_route_table_association | Enable association of the default route table with the transit gateway. | bool |	false | yes |
 | enable_default_route_table_propagation | Enable propagation of the default route table to the transit gateway. | bool | false | yes |
 | enable_auto_accept_shared_attachments | Enable auto acceptance of shared attachments. | bool | true | yes |
 | enable_dns_support | Enable DNS support for the transit gateway. | bool | true | yes |
 | allow_external_principals | TWhether to allow external AWS accounts to use resources shared through Resource Access Manager (RAM). | bool | true | yes |
-| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | "account-id-1", "account-id-2" | yes |
-| tags | A map of tags to assign to the transit gateway. | map(string) | "tgw-resource-share" | yes |
+| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | [] | yes |
+| tags | A map of tags to assign to the transit gateway. | map(string) | {} | yes |
 | share_tgw | Whether to share the transit gateway through Resource Access Manager (RAM). | bool | true | yes |
-| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | "vpc-id-1" | yes |
-| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | "subnet-id-1",  "subnet-id-2",  "subnet-id-3" | yes |
-| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | "attachment1-name> | yes |
-| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | "vpc-id-2" | yes |
-| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | "subnet-id-4",  "subnet-id-5",  "subnet-id-6" | yes |
-| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | "attachment2-name" | yes |
-| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | "vpc-id-3" | yes |
-| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | "subnet-id-7",  "subnet-id-8",  "subnet-id-9" | yes |
-| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | "attachment3-name" | yes |
-| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | "vpc-id-4" | yes |
-| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | "subnet-id-10", "subnet-id-11", "subnet-id-12" | yes |
-| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | "attachment4-name" | yes |
+| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | null | yes |
+| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | [] | yes |
+| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | "" | yes |
+| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | null | yes |
+| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | [] | yes |
+| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | " " | yes |
+| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | null | yes |
+| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | [] | yes |
+| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | " | yes |
+| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | null | yes |
+| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | [] | yes |
+| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | "" | yes |
 
 
 ## Resources
