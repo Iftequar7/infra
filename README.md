@@ -105,7 +105,7 @@ Finally, run the following command to apply the Terraform configuration:
 terraform apply -auto-approve
 ```
 
-This will create the VPC, Internet Gateway, and subnets in your AWS account.
+This will create the Transit Gateway, and Resource Access Manager in your AWS account to communicate with other AWS accounts.
 Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
@@ -120,7 +120,9 @@ Cleaning Up
 
 To delete the resources created by this Terraform configuration, run the following command:
 
+```
 terraform destroy
+```
 
 This will delete the VPC, Internet Gateway, and subnets from your AWS account.
 License
