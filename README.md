@@ -97,7 +97,7 @@ terraform init
 terraform plan
 ```
 
-These variables will be used to configure the VPC, Internet Gateway, and subnets.
+These values will be used to configure the Transit Gateway, and Resource Access Manager.
 
 Finally, run the following command to apply the Terraform configuration:
 
@@ -106,6 +106,7 @@ terraform apply -auto-approve
 ```
 
 This will create the Transit Gateway, and Resource Access Manager in your AWS account to communicate with other AWS accounts.
+
 Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
