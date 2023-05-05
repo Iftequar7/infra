@@ -105,7 +105,7 @@ Finally, run the following command to apply the Terraform configuration:
 terraform apply -auto-approve
 ```
 
-This will create the Transit Gateway, and Resource Access Manager in your AWS account to communicate with other AWS accounts.
+This will create the Transit Gateway, and Resource Access Manager in your AWS account to communicate with VPC's on other AWS accounts.
 
 Outputs
 
