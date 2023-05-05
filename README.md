@@ -66,25 +66,25 @@ share_tgw = true
 
   vpc_id_1                  =  "vpc-0d2e6e67a3c1aad38"
   subnet_ids_1              = ["subnet-0271d46555e756204", "subnet-0748daf7d1acf68dd", "subnet-0f6356b48d5683d0f"] 
-  attachment1_name          = "ingress-to-tgw01"
+  attachment1_name          = "name_1-to-tgw01"
 
 # ---------------------------------------------------- Transit Gatewaw vpc_2 attachment --------------------------------------------------
 
   vpc_id_2                  =  "vpc-0dda0cd4027ddface"
   subnet_ids_2              = ["subnet-0a3e445e5d0773496", "subnet-0c0d7a16f755ea570", "subnet-0bacdcfbddcea4fb4"]
-  attachment2_name          = "egress-to-tgw01"
+  attachment2_name          = "name_2-to-tgw01"
 
  # ---------------------------------------------------- Transit Gatewaw vpc_3 attachment --------------------------------------------------
  
   vpc_id_3                  = "vpc-061171ef1a7670ca6"
   subnet_ids_3              = ["subnet-013ae547208a6438f", "subnet-00e35c66452539875", "subnet-08640a3b1da20da9f"]
-  attachment3_name          = "sharedservices-to-tgw01"
+  attachment3_name          = "name_3-to-tgw01"
 
 # ---------------------------------------------------- Transit Gatewaw vpc_4 attachment --------------------------------------------------
 
   vpc_id_4                 = "vpc-0306b35e4ab042334"
   subnet_ids_4             = ["subnet-0134c9f92f8e06e46", "subnet-0a069ce5dfc9ea22f", "subnet-00961c796e81c9126"]
-  attachment4_name         = "orchestration-to-tgw01"
+  attachment4_name         = "namw_4-to-tgw01"
 }
 ```
 
