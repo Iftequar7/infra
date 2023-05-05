@@ -140,7 +140,7 @@ License
 **Note:** All inputs with Yes under the **Required** column are mandatory to execute the Terraform module successfully.
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
-| region | The region where the transit gateway should be created. | string | "" | yes |
+| region | The region where the transit gateway should be created. | string | ```""``` | yes |
 | name | The name for the transit gateway. | string | "" | yes |
 | amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | "" | yes |
 | description | A description for the transit gateway. | string | "" | yes |
