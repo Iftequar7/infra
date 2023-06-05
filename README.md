@@ -66,9 +66,7 @@ Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
 
-    primary_dns: This output provides the Primary DNS of the AWS Route 53 Private hosted one created by this module
-    secondary_dns: This output provides the secondary DNS of the AWS Route 53 Private hosted zone created by this module
-    health_check_id: This output provides the health check ID of the created Route 53 Private hosted zone
+    zone_id: This output provides the Zone ID of the Route 53 Private hosted DNS zone module
     
 
 Cleaning Up
