@@ -108,6 +108,8 @@ This will delete the Route 53 Private hosted zone from your AWS account.
 | Name | Description |
 |-----|-------------|
 | aws_route53_zone | It represents a hosted zone within Route 53, which is a container for DNS records that define how traffic is routed for a specific domain. |
+| aws_vpc_endpoint | It manages a VPC endpoint in AWS, allowing private access to AWS services from within a VPC. |
+| aws_route53_record | It manages a DNS record in Amazon Route 53, allowing you to create, update, or delete DNS records for your domain. |
 
 
 ## Outputs
