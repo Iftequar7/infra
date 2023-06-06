@@ -139,9 +139,9 @@ This will delete the VPC endpoints from your AWS account.
 | end_points | A map of endpoint configurations for different AWS services. Each key-value pair represents an endpoint configuration. | map(object) | ```(({}))``` | yes |
 | vpc_id | The ID of the VPC in which to create the VPC endpoints. | string | ```""``` | yes |
 | region_name | The AWS region where the VPC and endpoints are created. | string | ```""``` | yes |
-| subnet_ids | The IDs of the subnets in the VPC for the VPC endpoints. | list | ```()``` | yes |
+| subnet_ids | The IDs of the subnets in the VPC for the VPC endpoints. | list | ```[]``` | yes |
 | security_group_name | The AWS region where the DNS zone should be created. | string | ```""``` | yes |
-| sg_cidr_blocks | A list of record prefixes for the DNS zone. Each prefix represents a subdomain within the domain name. | list |	```()``` | yes |
+| sg_cidr_blocks | A list of record prefixes for the DNS zone. Each prefix represents a subdomain within the domain name. | list |	```[]``` | yes |
 | from_port | The AWS region where the VPC and endpoints are created. | number | ```""``` | yes |
 | to_port | The IDs of the subnets in the VPC for the VPC endpoints. | number | ```""``` | yes |
 | service_name | The AWS region where the DNS zone should be created. | string | ```""``` | yes |
