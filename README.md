@@ -25,9 +25,9 @@ module "vpc_endpoint" {
 
   end_points = {
     "cloudwatch" = {
-      vpc_id              = "vpc-0a9e3d48ce8cac8eb"
+      vpc_id              = "vpc-xxxxxxxxxxx"
       region_name         = "eu-central-1"
-      subnet_ids          = ["subnet-02287b720ef893718", "subnet-0929dcccf33f6de99", "subnet-0c8da89bc328da685"]
+      subnet_ids          = ["subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx"]
       security_group_name = "monitoring-endpoint-sg"
       sg_cidr_blocks      = ["10.0.0.0/8"]
       from_port           = 443
@@ -37,9 +37,9 @@ module "vpc_endpoint" {
     },
 
     "cloudtrail" = {
-      vpc_id              = "vpc-0a9e3d48ce8cac8eb"
+      vpc_id              = "vpc-xxxxxxxxxxx"
       region_name         = "eu-central-1"
-      subnet_ids          = ["subnet-02287b720ef893718", "subnet-0929dcccf33f6de99", "subnet-0c8da89bc328da685"]
+      subnet_ids          = ["subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx"]
       security_group_name = "cloudtrail-endpoint-sg"
       sg_cidr_blocks      = ["10.0.0.0/8"]
       from_port           = 443
@@ -49,9 +49,9 @@ module "vpc_endpoint" {
     },
 
     "identitystore" = {
-      vpc_id              = "vpc-0a9e3d48ce8cac8eb"
+      vpc_id              = "vpc-xxxxxxxxxxx"
       region_name         = "eu-central-1"
-      subnet_ids          = ["subnet-02287b720ef893718", "subnet-0929dcccf33f6de99", "subnet-0c8da89bc328da685"]
+      subnet_ids          = ["subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx"]
       security_group_name = "identitystore-endpoint-sg"
       sg_cidr_blocks      = ["10.0.0.0/8"]
       from_port           = 443
@@ -61,9 +61,9 @@ module "vpc_endpoint" {
     },
 
     "ecr(dkr)" = {
-      vpc_id              = "vpc-0a9e3d48ce8cac8eb"
+      vpc_id              = "vpc-xxxxxxxxxxx"
       region_name         = "eu-central-1"
-      subnet_ids          = ["subnet-02287b720ef893718", "subnet-0929dcccf33f6de99", "subnet-0c8da89bc328da685"]
+      subnet_ids          = ["subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx"]
       security_group_name = "ecr-dkr-endpoint-sg"
       sg_cidr_blocks      = ["10.0.0.0/8"]
       from_port           = 443
@@ -73,9 +73,9 @@ module "vpc_endpoint" {
     },
 
     "ecr(api)" = {
-      vpc_id              = "vpc-0a9e3d48ce8cac8eb"
+      vpc_id              = "vpc-xxxxxxxxxxx"
       region_name         = "eu-central-1"
-      subnet_ids          = ["subnet-02287b720ef893718", "subnet-0929dcccf33f6de99", "subnet-0c8da89bc328da685"]
+      subnet_ids          = ["subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx", "subnet-xxxxxxxxxx"]
       security_group_name = "ecr-api-endpoint-sg"
       sg_cidr_blocks      = ["10.0.0.0/8"]
       from_port           = 443
