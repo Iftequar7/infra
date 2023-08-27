@@ -1,6 +1,6 @@
-AWS Transit Gateway Configuration
+AWS EC2 Instance Terraform Configuration
 
-This repository contains Terraform code for configuring an Amazon Web Services (AWS) Transit Gateway.
+This repository contains Terraform code for configuring an Amazon Web Services (AWS) EC2 instances.
 
 Prerequisites
 
@@ -16,75 +16,54 @@ Kindly replace the values from the module given below.
 
     1. Set the region to your desired AWS region in the region parameter.
 
-    2. Configure the Transit Gateway by setting the following parameters:
-        * create_tgw: Set to true to create a new Transit Gateway.
-        * name: Name of the Transit Gateway.
-        * amazon_side_asn: Amazon side Autonomous System Number (ASN).
-        * description: Description of the Transit Gateway.
-        * enable_default_route_table_association: Set to false to disable association with the default route table.
-        * enable_default_route_table_propagation: Set to false to disable propagation to the default route table.
-        * enable_auto_accept_shared_attachments: Set to true to automatically accept shared VPC attachments.
-        * enable_dns_support: Set to true to enable DNS support.
+    2. Configure the EC2 instances by setting the following parameters:
+        * instance_count: Number of EC2 instances to create.
+        * ami: ID of the Amazon Machine Image (AMI) to use.
+        * availability_zone: Availability zone where the instance(s) will be launched.
+        * instance_type: Type of EC2 instance to launch.
+        * user_data_file: Path to the user data script file for instance customization.
+        * iam_role_name: Name of the IAM role to associate with the instance(s).
+        * associate_public_ip_address: Whether to associate a public IP address.
+        * subnet_id: ID of the subnet in which to launch the instance(s).
+        * private_ip: Private IP address for the instance(s).
+        * vpc_security_group_ids: List of security group IDs to associate.
+        * root_volume_type: Type of root volume (e.g., "gp2").
+        * root_volume_size: Size of the root volume in gigabytes.
+        * root_iops: IOPS for root volume (only applicable for provisioned IOPS volumes).
+        * root_throughput: Throughput for root volume (only applicable for throughput-optimized HDD volumes).
+        * volume_delete_on_termination: Whether to delete the volume on instance termination.
+        * root_block_device_encrypted: Whether the root block device should be encrypted.
+        * root_block_device_kms_key_id: KMS key ID for root block device encryption.
+        * name: Name tag for the instance(s).
+        * policy_document: IAM policy document for the instance role.
+        * policy_name: Name for the IAM policy.
+              
 
-    3. Configure Resource Sharing by setting the following parameters:
-        * allow_external_principals: Set to true to allow sharing with external accounts.
-        * resource_share_accounts: List of AWS account IDs to share the Transit Gateway with.
-        * tags: A map of tags to add to the resource share.
-        * share_tgw: Set to true to share the Transit Gateway.
-
-    4. Configure VPC Attachments by setting the following parameters for each attachment:
-        * vpc_id_X: ID of the VPC.
-        * subnet_ids_X: List of IDs of the subnets in the VPC.
-        
-
-# Transit Gateway Module ########################################################################################################
+# EC2 Instance Module ########################################################################################################
 ```
-module "tgw" {
-  source = "../../terraform-aws-transit-gateway"
-  region = "eu-central-1"
-  # create_tgw = true
-  name   = "networking-tgw-01"
-  amazon_side_asn         = "64512"
-  description             = "This is Transit Gaaateway"
-  enable_default_route_table_association    = false
-  enable_default_route_table_propagation    = false
-  enable_auto_accept_shared_attachments     = true
-  enable_dns_support                        = true
-
-######################################################### RAM resource share ########################################
-allow_external_principals = true
-resource_share_accounts = ["111111111111", "222222222222"] 
-  tags = {
-    Name = "tgw-resource-share"
-  }
-
-share_tgw = true
-
-####################################### Vpc attachments ##############################################################
-
-# ---------------------------------------------------- Transit Gatewaw vpc_1 attachment ------------------------------
-
-  vpc_id_1                  =  "vpc-0d2e6e67a3c1aad38"
-  subnet_ids_1              = ["subnet-0271d46555e756204", "subnet-0748daf7d1acf68dd", "subnet-0f6356b48d5683d0f"] 
-  attachment1_name          = "name_1-to-tgw01"
-
-# ---------------------------------------------------- Transit Gatewaw vpc_2 attachment ------------------------------
-
-  vpc_id_2                  =  "vpc-0dda0cd4027ddface"
-  subnet_ids_2              = ["subnet-0a3e445e5d0773496", "subnet-0c0d7a16f755ea570", "subnet-0bacdcfbddcea4fb4"]
-  attachment2_name          = "name_2-to-tgw01"
-
- # ---------------------------------------------------- Transit Gatewaw vpc_3 attachment -----------------------------
- 
-  vpc_id_3                  = "vpc-061171ef1a7670ca6"
-  subnet_ids_3              = ["subnet-013ae547208a6438f", "subnet-00e35c66452539875", "subnet-08640a3b1da20da9f"]
-  attachment3_name          = "name_3-to-tgw01"
-
-# ---------------------------------------------------- Transit Gatewaw vpc_4 attachment ------------------------------
-
-  vpc_id_4                 = "vpc-0306b35e4ab042334"
-  subnet_ids_4             = ["subnet-0134c9f92f8e06e46", "subnet-0a069ce5dfc9ea22f", "subnet-00961c796e81c9126"]
-  attachment4_name         = "name_4-to-tgw01"
+module "ec2-module" {
+  source = "git::https://github.com/NDB-ro/terraform-aws-ec2-module.git"
+  instance_count                       = var.instance_count
+  ami                                  = var.ami
+  availability_zone                    = var.availability_zone
+  instance_type                        = var.instance_type
+  user_data_file                       = var.user_data_file
+  iam_role_name                        = var.iam_role_name
+  associate_public_ip_address          = var.associate_public_ip_address
+  subnet_id                            = var.subnet_id
+  private_ip                           = var.private_ip
+  vpc_security_group_ids               = var.vpc_security_group_ids
+  root_volume_type                     = var.root_volume_type
+  root_volume_size                     = var.root_volume_size
+  root_iops                            = var.root_iops
+  root_throughput                      = var.root_throughput
+  volume_delete_on_termination         = var.volume_delete_on_termination
+  root_block_device_encrypted          = var.root_block_device_encrypted
+  root_block_device_kms_key_id         = var.root_block_device_kms_key_id
+  name                                 = var.name
+  policy_document                      = var.policy_document
+  policy_name                          = var.name
+  
 }
 ```
 
@@ -111,10 +90,8 @@ Outputs
 
 After running the terraform apply command, you can use the following outputs to retrieve the IDs of the resources created:
 
-    tgw_id: This output provides the ID of the AWS Transit Gateway created by this module
-    tgw_arn: This output provides the ARN (Amazon Resource Name) of the AWS Transit Gateway created by this module
-    tgw_share_arn: This output provides the ARN (Amazon Resource Name) of the created RAM (Resource Access Manager) resource share
-                   The resource share allows the specified accounts to use the created AWS Transit Gateway
+    instance_id: The ID of the created EC2 instance.
+    public_ip: The public IP address of the created EC2 instance.
     
 
 Cleaning Up
@@ -141,51 +118,46 @@ This will delete the Transit Gateway, and Resource Access Manager from your AWS 
 | Name | Description | Type	| Default | Required |
 |------|-------------|------|---------|----------|
 | region | The region where the transit gateway should be created. | string | ```""``` | yes |
-| name | The name for the transit gateway. | string | ```""``` | yes |
-| amazon_side_asn | The private ASN for the Amazon side of the transit gateway. | string | ```""``` | yes |
-| description | A description for the transit gateway. | string | ```""``` | yes |
-| enable_default_route_table_association | Enable association of the default route table with the transit gateway. | bool |	```false``` | yes |
-| enable_default_route_table_propagation | Enable propagation of the default route table to the transit gateway. | bool | ```false``` | yes |
-| enable_auto_accept_shared_attachments | Enable auto acceptance of shared attachments. | bool | ```true``` | yes |
-| enable_dns_support | Enable DNS support for the transit gateway. | bool | ```true``` | yes |
-| allow_external_principals | TWhether to allow external AWS accounts to use resources shared through Resource Access Manager (RAM). | bool | ```true``` | yes |
-| resource_share_accounts | A list of AWS account IDs to share the transit gateway with. | list(string) | ```[]``` | yes |
-| tags | A map of tags to assign to the transit gateway. | map(string) | ```{}``` | yes |
-| share_tgw | Whether to share the transit gateway through Resource Access Manager (RAM). | bool | ```true``` | yes |
-| vpc_id_1 | The ID of the VPC_1 to attach to the transit gateway. | string | ```null``` | yes |
-| subnet_ids_1 | A list of subnet IDs in the VPC_1 to attach to the transit gateway. | list(string) | ```[]``` | yes |
-| attachment1_name | The name for the attachment between the VPC_1 and the transit gateway. | string | ```""``` | yes |
-| vpc_id_2 | The ID of the VPC_2 to attach to the transit gateway. | string | ```null``` | yes |
-| subnet_ids_2 | A list of subnet IDs in the VPC_2 to attach to the transit gateway. | list(string) | ```[]``` | yes |
-| attachment2_name | The name for the attachment between the VPC_2 and the transit gateway. | string | ```""``` | yes |
-| vpc_id_3 | The ID of the VPC_3 to attach to the transit gateway. | string | ```null``` | yes |
-| subnet_ids_3 | A list of subnet IDs in the VPC_3 to attach to the transit gateway. | list(string) | ```[]``` | yes |
-| attachment3_name | The name for the attachment between the VPC_3 and the transit gateway. | string | ```""``` | yes |
-| vpc_id_4 | The ID of the VPC_4 to attach to the transit gateway. | string | ```null``` | yes |
-| subnet_ids_4 | A list of subnet IDs in the VPC_4 to attach to the transit gateway. | list(string) | ```[]``` | yes |
-| attachment4_name | The name for the attachment between the VPC_4 and the transit gateway. | string | ```""``` | yes |
+| instance_count | The number of instances to create. | number | ```1``` | yes |
+| ami | The Amazon Machine Image (AMI) to use for the instance. | string | ```ami-0122fd36a4f50873a``` | yes |
+| availability_zone | The availability zone in which to launch the instance. | string | ```eu-central-1a``` | yes |
+| instance_type | The instance type (e.g., t2.micro, m5.large). | string |	```t2.medium``` | yes |
+| user_data_file | Path to the user data script to run when launching the instance. | string | ```./script.sh``` | yes |
+| iam_role_name | The name of the IAM role to associate with the instance. | string | ```iam-dev-ec2-sessionhost-appCICD``` | yes |
+| associate_public_ip_address | Whether to associate a public IP address with the instance. | bool | ```false``` | yes |
+| subnet_id | The ID of the subnet in which to launch the instance. | string | ```subnet-025159d8647f3fb75``` | yes |
+| private_ip | The private IP address for the instance. | string | ```null``` | yes |
+| vpc_security_group_ids | List of security group IDs to associate with the instance. | list(string) | ```sg-037aab42aba350aa2``` | yes |
+| root_volume_type | The type of root volume (e.g., gp2, io1). | string | ```gp3``` | yes |
+| root_volume_size | The size of the root volume in gigabytes. | number | ```10``` | yes |
+| root_iops | The IOPS for the root volume (only for io1 volumes). | number | ```3000``` | yes |
+| root_throughput | The throughput for the root volume (only for io1 volumes). | number | ```125``` | yes |
+| volume_delete_on_termination | Whether to delete the root volume on instance termination. | bool | ```true``` | yes |
+| root_block_device_encrypted | Whether the root block device is encrypted. | bool | ```true``` | yes |
+| root_block_device_kms_key_id | The KMS key ID for encrypting the root block device. | string | ```null``` | yes |
+| name | The name of the EC2 instance. | string | ```ec2-sharedservices-dev-sessionhost-appCICD``` | yes |
+| policy_document | The policy document for an IAM role. | string | ```policy.json``` | yes |
+| policy_name | The name of the policy. | string | ```iampolicy-dev-ec2-sessionhost-appCICD``` | yes |
 
 
 ## Resources
 | Name | Description |
 |-----|-------------|
-| aws_ec2_transit_gateway | Manages an AWS Transit Gateway. |
-| aws_ec2_transit_gateway_vpc_attachment | Attaches a VPC to an AWS Transit Gateway. |
-| aws_ec2_transit_gateway_route_table | Manages a Transit Gateway Route Table. |
-| aws_ec2_transit_gateway_route | Manages a Transit Gateway Route. |
-| aws_ram_resource_share | Manages a Resource Share in AWS RAM. |
-| aws_ram_principal_association | Manages the association between RAM Share and Principal. |
-| aws_ram_resource_association | Manages the association between RAM Share and Resources. |
-| aws_caller_identity | Provides the AWS Account ID and other details. |
-| aws_ram_resource_share_accepter | Manages the acceptance of a Resource Share in AWS RAM. |
+| aws_instance | Manages an AWS Transit Gateway. |
+| aws_iam_role | Attaches a VPC to an AWS Transit Gateway. |
+| aws_iam_policy | Manages a Transit Gateway Route Table. |
+| aws_iam_role_policy_attachment | Manages a Transit Gateway Route. |
+| aws_iam_instance_profile | Manages a Resource Share in AWS RAM. |
 
 
 ## Outputs
 | Name | Description |
 |-----|-------------|
-| tgw_id | The ID of the created AWS Transit Gateway. |
-| tgw_arn | The ARN of the created AWS Transit Gateway. |
-| tgw_share_arn | The ARN of the created RAM resource share. |
+| instance_id | The ID of the created EC2 instance. |
+| public_ip | The public IP address associated with the instance (if applicable). |
+| private_ip | The private IP address of the instance. |
+| iam_role_arn | The ARN of the created IAM role. |
+| iam_policy_arn | The ARN of the created IAM policy. |
 
 
 This Terraform configuration is released under the MIT License.
